@@ -29,9 +29,9 @@ void PID::UpdateError(double cte) {
   /**
    * TODO: Update PID errors based on cte.
    */
-  i_error += cte;
-  d_error = cte - p_error; //it can be initialized with CTE value because the simulator is responsive only after 2 cycles
   p_error = cte;
+  i_error += cte;
+  d_error = cte - p_error;
 }
 ```
 
