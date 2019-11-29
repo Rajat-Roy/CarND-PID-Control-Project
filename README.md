@@ -46,38 +46,17 @@ double PID::TotalError() {
 }
 ```
 ## PID Steering
-`pid_steering` controller in this project is the one that, through the steering angle, makes the car drive along the road as close as possible to its center.
+`pid_steering` controller tries to keep the car to the center.
 
-At the beginning, I set the steering angle to a hardcoded value of zero and launched the simulator to see if the car goes straight. I noticed that the steering angle was correctly set to zero, with no deviation, and the car seemed (visually) to be driving straight. This is how I decided that, for the direction control, the integral component is not needed. I chose a PD controller.
+By hand tuning I set variable `Kp = 0.5` and `Kd = 3.5`.
 
+But there was a problem in the turnings where it was very unstable. 
 
-I changed the vehicle's length to 4 meters and used the motion model in the class to tune the `Kp` and `Kd` paramaters.
+Then I tried small `Kp` values which reduced the instability but also I had to adjust the `Kd` value again.
 
+This time it became `Kp = 0.04` and lowered `Kd = 1`.
 
-`Kp = 0.5` and `Kd = 2.5` seem to provide a good vehicle trajectory in following a reference line.
-
-I plugged these values into the implementation and started the simulator. The vehicle was very unstable, the oscilations were strong, and the car was not even able to drive on a straight line.
-
-This behavior was very surprising since the results looked good on the graph. Then, I realized that the car was steering with an angle in between -25deg and +25deg when the control values were given between -1rad and 1rad corresponding to -57deg and +57deg.
-
-
-And here is the problem. The car does not steer with the controller provided value and it has a 2/3 reducing factor.
-
-With this updated vehicle model, I chose to increase the `Kd` value to compensate the overshooting.
-I chose `Kp = 0.5` as before and increased `Kd = 3.5`.
-
-
-I got the simulator running and this time the car was able to follow a straight line trajectory. That's a great result!
-
-The remaining problem is that it becomes very unstable in curves. I took a look at how the control value is calculated and realized that such a big `Kd` induces the instability. When driving into a curve, the error grows very fast making the `Kd` component built a lot on top of `Kp` and results in oversteering.
-
-I then used the vehicle model to find a `Kp` `Kd` combination that doesn't overshoot, but allows for `Kd` to be smaller.
-
-I chose `Kp = 0.04` and lowered `Kd = 1`.
-
-In the simulator the vehicle is still able to drive on a straight line, but it is too slow to turn into curves and the car gets off the track.
-
-I kept tuning the parameters from this point by trial and error. I got a pair `Kp = 0.1` and `Kd = 1.2` that seemed like a good compromise. These are my final values.
+Then again to increase the speed at turnings I kept tuning and finally chose `Kp = 0.1` and `Kd = 1.2`.
 
 
 ## PID Speed
