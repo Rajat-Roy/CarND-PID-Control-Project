@@ -1,16 +1,14 @@
 # CarND-Controls-PID
 Self-Driving Car Engineer Nanodegree Program
 
-[PID](https://en.wikipedia.org/wiki/PID_controller) is one of the most popular control algorithms. It's a hundred years old and is still used because it gets the job done.
-
-In this project I implemented two PID controllers to drive the car around the track.
-The project is implemented in C++ and the source code can be found in the `src` folder above. The PID class is implemented under `PID.h` and `PID.cpp`. The steering angle and throttle values are calculated under `h.onMessage` function in `main.cpp`.
+## Goal
+Control the throttle and steering using two PID controllers to drive the car around the track.
 
 The starter code for this project is provided by Udacity and can be found [here](https://github.com/udacity/CarND-PID-Control-Project).
 
 ## What Is PID?
 
-PID is a closed loop feedback controller. It produces a control value based on the error between the current state of the system and the desired state.
+[PID](https://en.wikipedia.org/wiki/PID_controller) is a closed loop feedback controller. It produces a control value based on the error between the current state of the system and the desired state.
 
 ## PID Algorithm
 The PID controller is implemented using the PID class. 
