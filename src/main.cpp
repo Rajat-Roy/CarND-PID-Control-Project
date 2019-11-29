@@ -39,8 +39,8 @@ int main() {
    * TODO: Initialize the pid variable.
    */
 
-  pid_steering.Init(-0.1,-0.0,-1.5);
-  pid_speed.Init(-0.01,-0.0001,0.0);
+  pid_steering.Init(-0.18,-0.00005,-3.67); // (-0.21,-0.00005,-7.0) (-0.22,-0.0001,-7.0) (-0.2,-0.0001,-5.5);
+  pid_speed.Init(-0.85,-0.00009,-0.0);
 
   h.onMessage([&pid_steering, &pid_speed](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, 
                      uWS::OpCode opCode) {
