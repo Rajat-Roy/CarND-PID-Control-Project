@@ -15,9 +15,12 @@ The PID controller is implemented using the PID class.
 
 
 The `p_error`, `i_error` and `d_error` are calculated below.
-The `p_error` is the straight value taken from the feedback loop. It represents the difference between the desired system state and its current state. 
-`d_error`, or the derivate, is simply the substraction between the previous error and the current one.  
-`i_error`, or the integral, is the sum of errors over time.
+
+The `p_error` is the difference between the desired state and current state. 
+
+`d_error` is simply the difference between the previous error and the current one.  
+
+`i_error` is the sum of errors over time.
 
 These are calculated by the following code:
 
