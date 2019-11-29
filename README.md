@@ -45,8 +45,8 @@ double PID::TotalError() {
   return Kp * p_error + Kd * d_error + Ki * i_error;
 }
 ```
-## Controlling The Direction
-The first controller in this project is the one that, through the steering angle, makes the car drive along the road as close as possible to its center.
+## PID Steering
+`pid_steering` controller in this project is the one that, through the steering angle, makes the car drive along the road as close as possible to its center.
 
 At the beginning, I set the steering angle to a hardcoded value of zero and launched the simulator to see if the car goes straight. I noticed that the steering angle was correctly set to zero, with no deviation, and the car seemed (visually) to be driving straight. This is how I decided that, for the direction control, the integral component is not needed. I chose a PD controller.
 
@@ -80,7 +80,7 @@ In the simulator the vehicle is still able to drive on a straight line, but it i
 I kept tuning the parameters from this point by trial and error. I got a pair `Kp = 0.1` and `Kd = 1.2` that seemed like a good compromise. These are my final values.
 
 
-## Controlling The Velocity
+## PID Speed
 
 For the velocity controller the values were tuned manually since I don't have the car's velocity dynamics equations.  Choosing a hardcoded value of 0.3 for the throttle gets the vehicle running at 37 MPH in a pretty constant manner. The only thing to notice is that the vehicle takes some time to get up the speed. 
 
