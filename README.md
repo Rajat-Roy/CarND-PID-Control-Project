@@ -45,31 +45,20 @@ double PID::TotalError() {
   return Kp * p_error + Kd * d_error + Ki * i_error;
 }
 ```
-## PID Steering
-`pid_steering` controller tries to keep the car to the center.
-
-By hand tuning I set variable `Kp = 0.5` and `Kd = 3.5`.
-
-But there was a problem in the turnings where it was very unstable. 
-
-Then I tried small `Kp` values which reduced the instability but also I had to adjust the `Kd` value again.
-
-This time it became `Kp = 0.04` and lowered `Kd = 1`.
-
-Then again to increase the speed at turnings I kept tuning and finally chose `Kp = 0.1` and `Kd = 1.2`.
 
 
 ## PID Speed
 
-For the velocity controller the values were tuned manually since I don't have the car's velocity dynamics equations.  Choosing a hardcoded value of 0.3 for the throttle gets the vehicle running at 37 MPH in a pretty constant manner. The only thing to notice is that the vehicle takes some time to get up the speed. 
+`pid_speed` controller tries to maintain a steady speed.
 
-I decided to use a PI controller. Here the integral component is obviously useful. When the error is zero, the throttle value is maintained to keep the car moving at the desired velocity. I could have included the Kd component as well. It could serve in case the error decreases too fast. Then, the Kd would reduce the throttle anticipating that the car will go over the set velocity.
+I set the desired speed at 30MPH and chose `Kp = 0.85` and `Ki = 0.00009` by trial and error.
 
-I set the desired speed at 30MPH and chose `Kp = 0.01` and `Ki = 0.001` for my first trial. With these values the simulated car starts from 0MPH, increases speed, gets up to 50MPH and then slows down and stabilizes at 30MPH.
+Setting the desired speed at first is very important because `pid_steering` parameters depend on it as different velocity will require different steering response.
 
-Even without a graph to look at, it is obvious that the `Ki` factor is too large. The error gets intergated over a long period of time. I didn't want to increase the `Kp` factor to make the initial acceleration faster since: `0.01(Kp) * 30(initial error) = 0.3` (the approximate throttle to drive at desired speed). So increasing `Kp` would lead to instability in reaching the desired velocity.
+## PID Steering
+`pid_steering` controller tries to keep the car to the center.
 
-With `Ki = 0.001` the integrated error factor is too large. When the error reaches zero, the `Ki * sum(e(t))` is larger than 0.3, the approximated desired throttle. Because of this the car accelerates and increases the velocity up to 50MPH. During this time the error is negative and keeps being intergated. `Kp` component slows the vehicle down and when the 30MPH is reached again, the `sum(e(t))` is smaller than it was before, and manages to provide the desired throttle to maintain the speed.
+At 30MPH it is required to notice how much steering speed is required to steer at the maximum curvature of the road.
 
-I kept `Kp = 0.01` and lowered the integral factor ten times to `Ki = 0.0001`.
-These are my final values.
+By hand tuning I set variable `Kp = 0.18` and then I kept on finding the approriate value `Kd = 3.67` to mitigate the instability.
+Also, I set `Ki=00005` to center the vehicle by slowly reducing the error to 0 in case of straight path.
